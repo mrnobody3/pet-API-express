@@ -8,8 +8,13 @@ const bookSchema = new Schema({
 	author: {
 		type: String,
 		require: [true, "Author is require"]
+	},
+	owner: {
+		type: Schema.Types.ObjectId,
+		ref: "user",
+		require: true
 	}
-});
+}, {versionKey: false, timestamps: true});
 
 const Book = model("book", bookSchema);
 

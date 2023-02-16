@@ -1,9 +1,14 @@
 const Book = require("../../models/book")
 
-const add = async (req, res) => {
-	console.log("Add book")
-	const result = Book.create(req.body)
-	res.status(201).json(result)
+// WithOut Control Wrapper
+const add = async (req, res, next) => {
+	try {
+		const {_id: owner} = req.user;
+		const result = Book.create({...req.body, owner})
+		res.status(201).json(result)
+	} catch (error) {
+		next(error);
+	}
 }
 
 module.exports = add;

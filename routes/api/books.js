@@ -1,8 +1,12 @@
 const express = require("express");
+const { controllerWrapper } = require("../../helpers");
+const { authenticate } = require("../../middlewares");
 
 const router = express.Router();
-const {add} = require("../../contollers/books")
+const { add, remove, getAll } = require("../../contollers/books");
 
-router.post("/add", add)
+router.get("/", authenticate, controllerWrapper(getAll))
+router.post("/add", authenticate, add)
+router.delete("/remove/:id", authenticate, controllerWrapper(remove))
 
 module.exports = router;
