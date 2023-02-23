@@ -44,8 +44,8 @@ describe("test auth routes", ()=> {
 		const response = await request(app).post("/api/auth/login").send(loginUser);
 		expect(response.statusCode).toBe(200);
 		const {body} = response;
-		expect(body.token).toByTruthy();
-		const {token} = await User.findById(user._id);
-		expect(body.token).toBe(token);
+		expect(body.accessToken).toByTruthy();
+		const {accessToken} = await User.findById(user._id);
+		expect(body.accessToken).toBe(accessToken);
 	})
 })

@@ -17,7 +17,7 @@ const authenticate = async (req, res, next) => {
 		if (!user) {
 			next(HttpError(401, "User not found"))
 		}
-		if (!user.token) {
+		if (!user.accessToken) {
 			next(HttpError(401))
 		}
 		req.user = user;
