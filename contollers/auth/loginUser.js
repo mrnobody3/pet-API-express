@@ -7,7 +7,7 @@ const { SECRET_KEY } = process.env;
 
 const loginUser = async (req, res) => {
 	const { password, email } = req.body;
-	const user = await User.findOne({ email });
+	let user = await User.findOne({ email });
 	if (!user) {
 		throw HttpError(401, "Email or password invalid");
 	}
@@ -23,7 +23,17 @@ const loginUser = async (req, res) => {
 	}
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h"});
 	await User.findByIdAndUpdate(user._id, { token });
-	res.json({ token });
+	user = await User.findById(user._id, {
+		token,
+		email: 1,
+		phone: 1,
+		_id: 1,
+		name: 1
+	});
+	
+	res.json({
+		user,
+	});
 }
 
 module.exports = loginUser;
