@@ -18,7 +18,7 @@ router.post("/login", validateBody(schemas.loginSchema), controllerWrapper(login
 
 router.get("/current", authenticate, controllerWrapper(getCurrent));
 
-router.post("/logout", authenticate, controllerWrapper(logout));
+router.get("/logout", authenticate, controllerWrapper(logout));
 
 // upload.fields([{name: "cover", maxCount: 1}, {name: "subcover", maxCount: 2}])
 // upload.array("cover", 8) => req.files
