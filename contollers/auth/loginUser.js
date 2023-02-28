@@ -28,7 +28,8 @@ const loginUser = async (req, res) => {
 		email: 1,
 		phone: 1,
 		_id: 1,
-		name: 1
+		name: 1,
+		avatarUrl: 1
 	});
 	
 	res.json({
