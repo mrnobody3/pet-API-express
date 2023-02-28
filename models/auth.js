@@ -6,7 +6,7 @@ const userSchema = new Schema({
 	password: {
 		type: String,
 		required: [true, "Password is required"],
-		minlength: 7,
+		minlength: 5,
 	},
 	email: {
 		type: String,
@@ -36,12 +36,12 @@ const userSchema = new Schema({
 const registerSchema = Joi.object({
 	name: Joi.string().required(),
 	email: Joi.string().pattern(emailRegexp).required(),
-	password: Joi.string().min(6).required()
+	password: Joi.string().min(5).required()
 })
 
 const loginSchema = Joi.object({
 	email: Joi.string().pattern(emailRegexp).required(),
-	password: Joi.string().min(6).required()
+	password: Joi.string().min(5).required()
 })
 
 const schemas = {

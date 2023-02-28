@@ -22,6 +22,6 @@ router.get("/logout", authenticate, controllerWrapper(logout));
 
 // upload.fields([{name: "cover", maxCount: 1}, {name: "subcover", maxCount: 2}])
 // upload.array("cover", 8) => req.files
-router.post("/avatar",  upload.single("avatar"), controllerWrapper(updateAvatar))
+router.patch("/avatar",  authenticate, upload.single("avatar"), controllerWrapper(updateAvatar))
 
 module.exports = router;
