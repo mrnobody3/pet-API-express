@@ -11,8 +11,17 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint", "jest", "prettier"],
+  plugins: ["@typescript-eslint", "jest", "prettier", "require-sort"],
   rules: {
+    "require-sort/require-sort": [
+      "error",
+      {
+        ignoreCase: false,
+        ignoreDeclarationSort: false,
+        ignorePropertySort: false,
+        propertySyntaxSortOrder: ["none", "multiple", "single"],
+      },
+    ],
     semi: ["error", "always"],
     quotes: ["error", "single"],
     "import/extensions": [
