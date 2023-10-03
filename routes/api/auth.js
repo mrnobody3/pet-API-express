@@ -1,5 +1,6 @@
 const express = require("express")
 const {
+  refresh,
   addUser,
   loginUser,
   getCurrent,
@@ -21,6 +22,12 @@ router.post(
   "/login",
   validateBody(schemas.loginSchema),
   controllerWrapper(loginUser),
+)
+
+router.post(
+  "/refresh",
+  validateBody(schemas.refreshSchema),
+  controllerWrapper(refresh),
 )
 
 router.get("/current", authenticate, controllerWrapper(getCurrent))
