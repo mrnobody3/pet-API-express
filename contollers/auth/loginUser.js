@@ -1,9 +1,6 @@
 const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
 const { User } = require("../../models/auth")
-const { HttpError } = require("../../helpers")
-
-const { SECRET_KEY } = process.env
+const { HttpError, createTokens } = require("../../helpers")
 
 const loginUser = async (req, res) => {
   const { password, email } = req.body
@@ -18,22 +15,18 @@ const loginUser = async (req, res) => {
     throw HttpError(401, "Email or password invalid")
   }
 
-  const payload = {
-    id: user._id,
-  }
-  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" })
-  await User.findByIdAndUpdate(user._id, { accessToken })
+  const tokens = createTokens(user._id)
+  await User.findByIdAndUpdate(user._id, { ...tokens })
   user = await User.findById(user._id, {
-    accessToken,
+    accessToken: 1,
+    refreshToken: 1,
     email: 1,
     _id: 1,
     name: 1,
     avatarUrl: 1,
   })
 
-  res.json({
-    user,
-  })
+  res.json(user)
 }
 
 module.exports = loginUser
