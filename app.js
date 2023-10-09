@@ -6,6 +6,8 @@ require("dotenv").config()
 const bookRouter = require("./routes/api/books")
 const authRouter = require("./routes/api/auth")
 const userRouter = require("./routes/api/user")
+const swaggerUI = require("swagger-ui-express")
+const swDocument = require("./utils/swagger")
 
 const app = express()
 
@@ -18,6 +20,7 @@ app.use(express.json())
 app.get("/api/test", (req, res) => {
   res.json(null)
 })
+// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swDocument))
 
 app.use("/api/books", bookRouter)
 app.use("/api/auth", authRouter)
