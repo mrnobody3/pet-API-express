@@ -1,17 +1,45 @@
-const swaggerJSDoc = require("swagger-jsdoc")
-
-const swaggerOptions = {
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const { version } = require("../package.json");
+console.log(__dirname);
+const options = {
   definition: {
-    орепарі: "3.0.0",
+    openapi: "3.0.0",
     info: {
-      title: "Sample API with Swagger",
-      version: "1.0.0",
-      description:
-        "A sample API to demonstrate Swagger integration with Node-js",
+      title: "REST API Docs",
+      version,
     },
-    servers: [{ url: "http://localhost:${port}" }],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ["./routes/* js"], // Path to the API routes directory
+  apis: ["./routes/api/auth.js"],
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+
+function swaggerDocs(app, port) {
+  // Swagger page
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+  // Docs in JSON format
+  app.get("/docs.json", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(swaggerSpec);
+  });
+
+  console.log(`Docs available at http://localhost:${port}/docs`);
 }
 
-const swaggerSpec = swaggerJSDoc(swaggerOptions)
+module.exports = swaggerDocs;
