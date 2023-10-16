@@ -15,18 +15,30 @@ const router = express.Router();
  * @openapi
  * /api/auth/register:
  *   post:
- *     description: Register new user
+ *     tags:
+ *     - User
+ *     summary: Register new user
  *     requestBody:
- *         description: Optional description in *Markdown*
- *         required: true
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/RegisterUserSchema'
- *
- *           text/plain:
- *             schema:
- *               type: string
+ *       description: Optional description in *Markdown*
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - name
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 default: jane.doe@example.com
+ *               name:
+ *                 type: string
+ *                 default: Jane Doe
+ *               password:
+ *                 type: string
+ *                 default: stringPassword123
  *     responses:
  *       201:
  *         description: Success
@@ -34,7 +46,6 @@ const router = express.Router();
  *         description: Conflict
  *       400:
  *         description: Bad request
- *
  */
 router.post(
   "/register",
