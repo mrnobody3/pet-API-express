@@ -14,21 +14,25 @@ const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
-app.use(
-  cors({
-    origin: "*",
-  }),
-);
+
+// app.use(
+//   cors({
+//     origin: "*",
+//   }),
+// );
+
 app.use(express.json());
 
 app.get("/api/test", (req, res) => {
   res.json(null);
 });
-// app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swDocument))
 
 app.use("/api/books", bookRouter);
+
 app.use("/api/auth", authRouter);
+
 app.use("/api/user", userRouter);
+
 swaggerDocs(app, PORT);
 
 app.use((req, res) => {
