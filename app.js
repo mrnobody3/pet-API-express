@@ -2,7 +2,6 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
-const { PORT = 4000 } = process.env;
 
 const bookRouter = require("./routes/api/books");
 const authRouter = require("./routes/api/auth");
@@ -10,16 +9,17 @@ const userRouter = require("./routes/api/user");
 const swaggerDocs = require("./utils/swagger");
 
 const app = express();
+const { PORT = 4000 } = process.env;
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 app.use(logger(formatsLogger));
 
-// app.use(
-//   cors({
-//     origin: "*",
-//   }),
-// );
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
 
 app.use(express.json());
 
