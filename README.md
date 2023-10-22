@@ -25,7 +25,7 @@ Now that you have the project set up, you can start using it:
 yarn start
 ```
 
-1. Open your web browser and navigate to http://localhost:4000/docs.
+1. Open your web browser and navigate to [Swagger routes](https://api-express-017d.onrender.com/docs/).
 
 2. You can make changes to the source code, and the development server will automatically reload the application.
 
